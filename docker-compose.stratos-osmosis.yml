@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  hermes:
+    container_name: hermes
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - CONFIG_FILE=./stratos-osmosis/config.toml
+    stdin_open: true
+    tty: true
+    volumes:
+      - hermes_volume:/home/hermes/.hermes
+    # command: tail -f /dev/null
+    command: hermes --config .hermes/config.toml start
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "512m"
+
+volumes:
+  hermes_volume:
