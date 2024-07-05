@@ -52,6 +52,7 @@ type = "CosmosSdk"
 id = "osmosis-1"
 rpc_addr = "https://rpc.osmosis.zone/"
 grpc_addr = "https://osmosis-grpc.stake-town.com/"
+event_source = { mode = 'pull', url = 'wss://osmosis-rpc.publicnode.com:443/websocket', batch_delay = '500ms', interval = '1s', max_retries = 4 }
 rpc_timeout = "10s"
 trusted_node = false
 account_prefix = "osmo"
