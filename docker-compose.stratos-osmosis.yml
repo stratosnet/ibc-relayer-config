@@ -19,6 +19,22 @@ services:
       driver: "json-file"
       options:
         max-size: "512m"
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.clear-packets.schedule: "@daily"
+      ofelia.job-exec.clear-packets.command: "hermes --config /home/hermes/.hermes/config.toml clear packets --chain osmosis-1 --port transfer --channel channel-78678"
+
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - hermes
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: daemon --docker
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "512m"
 
 volumes:
   hermes_volume:

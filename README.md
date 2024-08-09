@@ -5,7 +5,7 @@ This is a config for docker-compose set up of hermes relayer
 ## How to run?
 
 ```
-docker-compose -f docker-compose.stratos-osmosis.yml up -d
+docker compose -f docker-compose.stratos-osmosis.yml up -d
 ```
 
 ## Set up wallets (first time)
@@ -19,8 +19,7 @@ https://iancoleman.io/bip39/
 2. Connect to the container
 
 ```
-docker-compose -f docker-compose.stratos-osmosis.yml exec hermes bash
-pushd /tmp
+docker compose -f docker-compose.stratos-osmosis.yml exec hermes bash pushd /tmp
 ```
 
 3. Store them to files
