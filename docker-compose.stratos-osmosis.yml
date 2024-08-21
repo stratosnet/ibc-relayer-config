@@ -13,6 +13,7 @@ services:
     tty: true
     volumes:
       - hermes_volume:/home/hermes/.hermes
+      - ./scripts:/tmp/scripts
     # command: tail -f /dev/null
     command: hermes --config .hermes/config.toml start
     logging:
@@ -21,10 +22,17 @@ services:
         max-size: "512m"
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.clear-packets.schedule: "@daily"
-      ofelia.job-exec.clear-packets.command: "hermes --config /home/hermes/.hermes/config.toml clear packets --chain osmosis-1 --port transfer --channel channel-78678"
+      ofelia.job-exec.stratos-daily.schedule: "@daily"
+      ofelia.job-exec.stratos-daily.command: "sh /tmp/scripts/stratos/daily.sh"
+      ofelia.job-exec.stratos-hourly.schedule: "@hourly"
+      ofelia.job-exec.stratos-hourly.command: "sh /tmp/scripts/stratos/hourly.sh"
+      ofelia.job-exec.osmosis-daily.schedule: "@daily"
+      ofelia.job-exec.osmosis-daily.command: "sh /tmp/scripts/osmosis/daily.sh"
+      ofelia.job-exec.osmosis-hourly.schedule: "@hourly"
+      ofelia.job-exec.osmosis-hourly.command: "sh /tmp/scripts/osmosis/hourly.sh"
 
   ofelia:
+    container_name: ofelia
     image: mcuadros/ofelia:latest
     depends_on:
       - hermes

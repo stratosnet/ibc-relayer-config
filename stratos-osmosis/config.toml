@@ -61,7 +61,7 @@ key_store_type = "Test"
 store_prefix = "ibc"
 default_gas = 1000000
 max_gas = 2000000
-gas_multiplier = 1.1
+gas_multiplier = 1.3
 max_msg_num = 20
 max_tx_size = 180000
 max_grpc_decoding_size = 33554432
@@ -91,7 +91,7 @@ denom = "uosmo"
 policy = "allow"
 list = [[
     "transfer",
-    "channel-78678",
+    "channel-81016",
 ]]
 
 [chains.packet_filter.min_fees]
@@ -149,7 +149,7 @@ denom = "wei"
 policy = "allow"
 list = [[
     "transfer",
-    "channel-0",
+    "channel-1",
 ]]
 
 [chains.packet_filter.min_fees]
