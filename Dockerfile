@@ -1,4 +1,4 @@
-FROM informalsystems/hermes:1.10.0 as ibc-relayer
+FROM informalsystems/hermes:1.10.3 as ibc-relayer
 
 ARG CONFIG_FILE=empty.toml
 
