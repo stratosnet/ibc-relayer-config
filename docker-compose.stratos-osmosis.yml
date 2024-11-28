@@ -4,6 +4,10 @@ services:
   hermes:
     container_name: hermes
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
     build:
       context: .
       dockerfile: Dockerfile
@@ -31,9 +35,38 @@ services:
       ofelia.job-exec.osmosis-hourly.schedule: "@hourly"
       ofelia.job-exec.osmosis-hourly.command: "sh /tmp/scripts/osmosis/hourly.sh"
 
+  restarter:
+    container_name: restarter
+    image: docker:cli
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      # in seconds
+      - RESTART_TIME=3600
+    depends_on:
+      - hermes
+    command:
+      - /bin/sh
+      - -c
+      - |
+        while true; do
+          echo "Await for restart in $(env | grep RESTART_TIME | grep -oe '[^=]*$') seconds..."
+          sleep "$(env | grep RESTART_TIME | grep -oe '[^=]*$')"
+          echo "Re-starting..."
+          docker stop hermes
+          docker start hermes
+          echo "Re-start completed"
+        done
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "512m"
+
   ofelia:
     container_name: ofelia
     image: mcuadros/ofelia:latest
+    restart: unless-stopped
     depends_on:
       - hermes
     volumes:
