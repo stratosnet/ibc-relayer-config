@@ -43,7 +43,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       # in seconds
-      - RESTART_TIME=3600
+      - RESTART_TIME=86400
     depends_on:
       - hermes
     command:
